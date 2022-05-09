@@ -1,9 +1,12 @@
 package com.fg.firetale;
 
+import com.fg.firetale.block.BlockRegister;
+import com.fg.firetale.item.ItemRegistry;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
@@ -21,5 +24,9 @@ import java.util.stream.Collectors;
 public class firetale {
     public static final String MODID="firetale";
     private static final Logger LOGGER = LogManager.getLogger();
-
+    public firetale(){
+        IEventBus BUS = FMLJavaModLoadingContext.get().getModEventBus();
+        ItemRegistry.ITEMS.register(BUS);
+        BlockRegister.BLOCKS.register(BUS);
+    }
 }
