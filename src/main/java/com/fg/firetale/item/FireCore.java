@@ -1,12 +1,12 @@
 package com.fg.firetale.item;
 
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 
-public class FireCore {
+
+public class FireCore extends Item{
     public FireCore()
     {
-        IEventBus modbus = FMLJavaModLoadingContext.get().getModEventBus();
-        ItemRegistry.ITEMS.register(modbus);
+        super(new Item.Properties().stacksTo(16).tab(CreativeModeTab.TAB_MISC));
     }
 }
