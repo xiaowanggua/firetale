@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -44,9 +45,16 @@ public class FireIntensifyTable<E extends BlockEntity> extends BaseEntityBlock {
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if(!pLevel.isClientSide&&pHand==InteractionHand.MAIN_HAND) {
             FitBlockEntity fbe = (FitBlockEntity) pLevel.getBlockEntity(pPos);
-            NetworkHooks.openGui((ServerPlayer) pPlayer,fbe);
+            NetworkHooks.openGui((ServerPlayer) pPlayer, fbe);
         }
         return InteractionResult.SUCCESS;
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
+        return BaseEntityBlock.createTickerHelper(pBlockEntityType, BlockEntityReg.fitBlockEntity.get(),
+                pLevel.isClientSide ? FitBlockEntity::clientTick : FitBlockEntity::serverTick);
     }
 
 }
