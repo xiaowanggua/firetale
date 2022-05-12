@@ -6,6 +6,6 @@ import net.minecraft.world.level.material.Material;
 
 public class BlockOfFanqieqwq extends Block{
     public BlockOfFanqieqwq() {
-        super(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(114514.0F, 8.0F));
+        super(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(114514.0F, 114514.0F));
     }
 }
