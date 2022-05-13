@@ -1,11 +1,15 @@
 package com.fg.firetale.block;
 
+import com.fg.firetale.gui.FitContainer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
@@ -44,9 +48,16 @@ public class FireIntensifyTable<E extends BlockEntity> extends BaseEntityBlock {
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if(!pLevel.isClientSide&&pHand==InteractionHand.MAIN_HAND) {
             FitBlockEntity fbe = (FitBlockEntity) pLevel.getBlockEntity(pPos);
-            NetworkHooks.openGui((ServerPlayer) pPlayer, fbe);
+            pPlayer.openMenu(pState.getMenuProvider(pLevel, pPos));
         }
         return InteractionResult.SUCCESS;
+    }
+
+    @Nullable
+    @Override
+    public MenuProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {
+        return new SimpleMenuProvider((id, inv, player) -> new FitContainer(id,inv,pos,player.level,ContainerLevelAccess.create(world, pos)),
+                new TranslatableComponent(getDescriptionId()));
     }
 
     @Nullable

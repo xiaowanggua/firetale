@@ -26,6 +26,7 @@ public class FitContainerScreen extends AbstractContainerScreen<FitContainer> {
         renderBackground(poseStack);
         super.render(poseStack, mouseX, mouseY, partialTicks);
         renderTooltip(poseStack, mouseX, mouseY);
+
     }
 
     @Override

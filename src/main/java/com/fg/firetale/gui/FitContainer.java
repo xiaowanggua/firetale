@@ -1,5 +1,7 @@
 package com.fg.firetale.gui;
 
+import com.fg.firetale.block.BlockRegister;
+import com.fg.firetale.block.FireIntensifyTable;
 import com.fg.firetale.block.FitBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
@@ -7,6 +9,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -15,11 +18,12 @@ import net.minecraft.world.level.Level;
 
 public class FitContainer extends AbstractContainerMenu {
 
-
+    ContainerLevelAccess con;
     private Container Con3 = new SimpleContainer(3);
-    public FitContainer(int pContainerId, Inventory inventory, BlockPos pos, Level pLevel) {
+    public FitContainer(int pContainerId, Inventory inventory, BlockPos pos, Level pLevel, ContainerLevelAccess containerLevelAccess) {
         super(MenuTypeReg.fitGui.get(), pContainerId);
         FitBlockEntity fitBlockEntity=(FitBlockEntity)pLevel.getBlockEntity(pos);
+        con=containerLevelAccess;
         this.addSlot(new Slot(Con3,0,1,1));
         this.addSlot(new Slot(Con3,1,1,2));
         this.addSlot(new Slot(Con3,2,1,3){
@@ -34,7 +38,7 @@ public class FitContainer extends AbstractContainerMenu {
     }
     @Override
     public boolean stillValid(Player player) {
-        return false;
+        return stillValid(con,player, BlockRegister.fireIntensifyTable.get());
     }
 
     private int addSlotRange(Container inventory, int index, int x, int y, int amount, int dx) {
