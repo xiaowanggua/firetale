@@ -15,4 +15,5 @@ public class BlockRegister {
 
     public static final RegistryObject<Block> darkStone = BLOCKS.register("dark_stone", DarkStone::new);
     public static final RegistryObject<Block> fireIntensifyTable = BLOCKS.register("fire_intensifytable", ()->new FireIntensifyTable());
+    public static final RegistryObject<Block> blockOfFanqieqwq = BLOCKS.register("block_of_fanqieqwq",BlockOfFanqieqwq::new);
 }
