@@ -22,10 +22,10 @@ import org.jetbrains.annotations.Nullable;
 
 public class FitBlockEntity extends BlockEntity implements MenuProvider {
 
-    private NonNullList<ItemStack> items;
+    //private NonNullList<ItemStack> items;
     public FitBlockEntity( BlockPos pWorldPosition, BlockState pBlockState) {
         super(BlockEntityReg.fitBlockEntity.get(), pWorldPosition, pBlockState);
-        this.items = NonNullList.withSize(3, ItemStack.EMPTY);
+        //this.items = NonNullList.withSize(3, ItemStack.EMPTY);
     }
 
 
@@ -38,11 +38,6 @@ public class FitBlockEntity extends BlockEntity implements MenuProvider {
     @Override
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
         return new FitContainer(i,inventory, this.getBlockPos(), this.level);
-    }
-
-
-    public NonNullList<ItemStack> getInventory() {
-        return items;
     }
 
     public static void clientTick(Level level, BlockPos pos, BlockState blockState, FitBlockEntity fitBlockEntity) {
