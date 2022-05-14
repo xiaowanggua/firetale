@@ -5,6 +5,7 @@ import com.fg.firetale.block.BlockRegister;
 import com.fg.firetale.gui.FitContainerScreen;
 import com.fg.firetale.gui.MenuTypeReg;
 import com.fg.firetale.item.ItemRegistry;
+import com.fg.firetale.worldgen.dimensions.Dimensions;
 import com.mojang.blaze3d.platform.ScreenManager;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.level.block.Block;
@@ -38,6 +39,7 @@ public class firetale {
         BlockRegister.BLOCKS.register(BUS);
         BlockEntityReg.BlockEntity.register(BUS);
         MenuTypeReg.FMenuType.register(BUS);
+        BUS.addListener(ModSetup::init);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> BUS.addListener(ClientSetup::init));
 
     }
@@ -47,6 +49,16 @@ class ClientSetup {
     public static void init(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             MenuScreens.register(MenuTypeReg.fitGui.get(), FitContainerScreen::new);
+
+        });
+    }
+}
+@Mod.EventBusSubscriber(modid = firetale.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+class ModSetup {
+    public static void init(FMLClientSetupEvent event) {
+        event.enqueueWork(() -> {
+            Dimensions.register();
+
         });
     }
 }
