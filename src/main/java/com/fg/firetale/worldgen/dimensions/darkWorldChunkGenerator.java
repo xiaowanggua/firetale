@@ -1,6 +1,7 @@
 package com.fg.firetale.worldgen.dimensions;
 
 import com.fg.firetale.block.BlockRegister;
+import com.fg.firetale.worldgen.structure.RegStructure;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
@@ -68,7 +69,7 @@ public class darkWorldChunkGenerator extends ChunkGenerator {
     }
 
     private static Optional<HolderSet<StructureSet>> getSet(Registry<StructureSet> structureSetRegistry) {
-        HolderSet.Named<StructureSet> structureSet = structureSetRegistry.getOrCreateTag(TagKey.create(Registry.STRUCTURE_SET_REGISTRY,null));
+        HolderSet.Named<StructureSet> structureSet = structureSetRegistry.getOrCreateTag(TagKey.create(Registry.STRUCTURE_SET_REGISTRY, RegStructure.DARKWORLD_DIMENSION_SET));
         return Optional.of(structureSet);
     }
 

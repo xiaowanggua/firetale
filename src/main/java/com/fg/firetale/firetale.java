@@ -6,6 +6,7 @@ import com.fg.firetale.gui.FitContainerScreen;
 import com.fg.firetale.gui.MenuTypeReg;
 import com.fg.firetale.item.ItemRegistry;
 import com.fg.firetale.worldgen.dimensions.Dimensions;
+import com.fg.firetale.worldgen.structure.RegStructure;
 import com.mojang.blaze3d.platform.ScreenManager;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.level.block.Block;

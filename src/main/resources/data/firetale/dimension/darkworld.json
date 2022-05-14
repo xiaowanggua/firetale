@@ -1,0 +1,11 @@
+{
+  "type": "firetale:darkworldtype",
+  "generator": {
+    "type": "firetale:darkworld_chunkgen",
+    "settings": {
+      "base": 55,
+      "verticalvariance": 2,
+      "horizontalvariance": 4
+    }
+  }
+}
