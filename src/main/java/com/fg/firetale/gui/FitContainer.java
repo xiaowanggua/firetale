@@ -13,17 +13,24 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.wrapper.InvWrapper;
 
 
 public class FitContainer extends AbstractContainerMenu {
 
-    ContainerLevelAccess con;
+    private BlockEntity blockEntity;
+    private Player playerEntity;
+    private IItemHandler playerInventory;
     private Container Con3 = new SimpleContainer(3);
-    public FitContainer(int pContainerId, Inventory inventory, BlockPos pos, Level pLevel, ContainerLevelAccess containerLevelAccess) {
+
+    public FitContainer(int pContainerId, Inventory inventory, BlockPos pos, Player pPlayer) {
         super(MenuTypeReg.fitGui.get(), pContainerId);
-        FitBlockEntity fitBlockEntity=(FitBlockEntity)pLevel.getBlockEntity(pos);
-        con=containerLevelAccess;
+
+        this.blockEntity=pPlayer.getCommandSenderWorld().getBlockEntity(pos);
+        this.playerInventory= new InvWrapper(inventory);
+        this.playerEntity=pPlayer;
         this.addSlot(new Slot(Con3,0,1,1));
         this.addSlot(new Slot(Con3,1,1,2));
         this.addSlot(new Slot(Con3,2,1,3){
@@ -38,7 +45,7 @@ public class FitContainer extends AbstractContainerMenu {
     }
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(con,player, BlockRegister.fireIntensifyTable.get());
+        return stillValid(ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()),playerEntity, BlockRegister.fireIntensifyTable.get());
     }
 
     private int addSlotRange(Container inventory, int index, int x, int y, int amount, int dx) {

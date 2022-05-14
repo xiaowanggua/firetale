@@ -6,12 +6,15 @@ import com.fg.firetale.gui.FitContainerScreen;
 import com.fg.firetale.gui.MenuTypeReg;
 import com.fg.firetale.item.ItemRegistry;
 import com.mojang.blaze3d.platform.ScreenManager;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -35,5 +38,15 @@ public class firetale {
         BlockRegister.BLOCKS.register(BUS);
         BlockEntityReg.BlockEntity.register(BUS);
         MenuTypeReg.FMenuType.register(BUS);
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> BUS.addListener(ClientSetup::init));
+
+    }
+}
+@Mod.EventBusSubscriber(modid = firetale.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+class ClientSetup {
+    public static void init(FMLClientSetupEvent event) {
+        event.enqueueWork(() -> {
+            MenuScreens.register(MenuTypeReg.fitGui.get(), FitContainerScreen::new);
+        });
     }
 }

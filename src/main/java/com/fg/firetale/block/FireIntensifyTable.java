@@ -1,14 +1,18 @@
 package com.fg.firetale.block;
 
+import com.fg.firetale.firetale;
 import com.fg.firetale.gui.FitContainer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -43,22 +47,33 @@ public class FireIntensifyTable<E extends BlockEntity> extends BaseEntityBlock {
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         return new FitBlockEntity(blockPos, blockState);
     }
+    @SuppressWarnings("deprecation")
     @NotNull
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if(!pLevel.isClientSide&&pHand==InteractionHand.MAIN_HAND) {
-            FitBlockEntity fbe = (FitBlockEntity) pLevel.getBlockEntity(pPos);
-            pPlayer.openMenu(pState.getMenuProvider(pLevel, pPos));
+            BlockEntity FitBE = pLevel.getBlockEntity(pPos);
+            if(FitBE instanceof FitBlockEntity){
+                    MenuProvider containerProvider = new MenuProvider() {
+                        @Override
+                        public Component getDisplayName() {
+                            return new TranslatableComponent("screen."+ firetale.MODID+".fitgui");
+                        }
+
+                        @Nullable
+                        @Override
+                        public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
+                            return new FitContainer(i,inventory,pPos,player);
+                        }
+                    };
+                    NetworkHooks.openGui((ServerPlayer) pPlayer,containerProvider,FitBE.getBlockPos());
+            }else {
+                throw new IllegalStateException("container missing!");
+            }
         }
         return InteractionResult.SUCCESS;
     }
 
-    @Nullable
-    @Override
-    public MenuProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {
-        return new SimpleMenuProvider((id, inv, player) -> new FitContainer(id,inv,pos,player.level,ContainerLevelAccess.create(world, pos)),
-                new TranslatableComponent(getDescriptionId()));
-    }
 
     @Nullable
     @Override
