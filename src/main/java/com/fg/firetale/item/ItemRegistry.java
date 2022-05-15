@@ -19,4 +19,5 @@ public class ItemRegistry {
     public static final RegistryObject<Item> darkStone = ITEMS.register("dark_stone",()->new BlockItem(BlockRegister.darkStone.get(), new Item.Properties().tab(ModTab.fireTab)));
     public static final RegistryObject<Item> fireIntensifyTable = ITEMS.register("fire_intensifytable",()->new BlockItem(BlockRegister.fireIntensifyTable.get(), new Item.Properties().tab(ModTab.fireTab)));
     public static final RegistryObject<Item> blockOfFanqieqwq = ITEMS.register("block_of_fanqieqwq",()->new BlockItem(BlockRegister.blockOfFanqieqwq.get(),new Item.Properties().tab(ModTab.fireTab)));
+    public static final RegistryObject<Item> embersRock = ITEMS.register("embers_rock",()->new BlockItem(BlockRegister.embersRock.get(),new Item.Properties().tab(ModTab.fireTab)));
 }
