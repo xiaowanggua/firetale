@@ -1,0 +1,12 @@
+{
+  "darkworld1": {
+    "subtitle": "darkworld1",
+    "replace": "true",
+    "sounds": [
+      {
+        "name": "firetale:darkworld1",
+        "stream": true
+      }
+    ]
+  }
+}

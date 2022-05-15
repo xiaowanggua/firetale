@@ -98,14 +98,20 @@ public class darkWorldChunkGenerator extends ChunkGenerator {
     public void buildSurface(WorldGenRegion worldGenRegion, StructureFeatureManager structureFeatureManager, ChunkAccess chunkAccess) {
         BlockState bedrock = Blocks.BEDROCK.defaultBlockState();
         BlockState stone = BlockRegister.darkStone.get().defaultBlockState();
-
+        BlockState lava = Blocks.LAVA.defaultBlockState();
         ChunkPos chunkpos = chunkAccess.getPos();
-
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
         int x,z;
         for (x = 0; x < 16; x++) {
             for (z = 0; z < 16; z++) {
                 chunkAccess.setBlockState(pos.set(x, 0, z), bedrock, false);
+            }
+        }
+        for (x = 0; x < 16; x++) {
+            for (z = 0; z < 16; z++) {
+                chunkAccess.setBlockState(pos.set(x, 1, z), lava, false);
+                chunkAccess.setBlockState(pos.set(x, 2, z), lava, false);
+
             }
         }
 
@@ -117,7 +123,7 @@ public class darkWorldChunkGenerator extends ChunkGenerator {
                 int realx = chunkpos.x * 16 + x;
                 int realz = chunkpos.z * 16 + z;
                 int height = getHeightAt(baseHeight, verticalVariance, horizontalVariance, realx, realz);
-                for (int y = 1 ; y < height ; y++) {
+                for (int y = 3 ; y < height ; y++) {
                     chunkAccess.setBlockState(pos.set(x, y, z), stone, false);
                 }
             }
@@ -161,7 +167,7 @@ public class darkWorldChunkGenerator extends ChunkGenerator {
         return getHeightAt(baseHeight, verticalVariance, horizontalVariance, i, i1);
     }
     private int getHeightAt(int baseHeight, float verticalVariance, float horizontalVariance, int x, int z) {
-        return (int) (baseHeight + Math.sin(x / horizontalVariance) * verticalVariance + Math.cos(z / horizontalVariance) * verticalVariance);
+        return (int) (baseHeight + Math.sin(x / horizontalVariance) * verticalVariance + Math.cos(z / horizontalVariance) * verticalVariance)+(int)(Math.random()*4);
     }
 
     @Override
