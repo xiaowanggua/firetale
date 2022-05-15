@@ -9,6 +9,8 @@ import com.fg.firetale.worldgen.dimensions.Dimensions;
 import com.fg.firetale.worldgen.structure.RegStructure;
 import com.mojang.blaze3d.platform.ScreenManager;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
@@ -25,6 +27,9 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,6 +45,7 @@ public class firetale {
         BlockRegister.BLOCKS.register(BUS);
         BlockEntityReg.BlockEntity.register(BUS);
         MenuTypeReg.FMenuType.register(BUS);
+        SoundEventRegistry.SOUNDS.register(BUS);
         BUS.addListener(ModSetup::init);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> BUS.addListener(ClientSetup::init));
 
@@ -62,4 +68,8 @@ class ModSetup {
 
         });
     }
+}
+class SoundEventRegistry {
+    public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS,firetale.MODID);
+    public static final RegistryObject<SoundEvent> meaSound = SOUNDS.register("darkworld1", () -> new SoundEvent(new ResourceLocation(firetale.MODID,"darkworld1")));
 }
